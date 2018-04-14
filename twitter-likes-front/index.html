@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tweets!!</title>
+</head>
+<body>
+
+    <div id="likes">
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script>
+        var likesElement = document.getElementById('likes');
+
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+        var config = {
+            // apiKey: "<API_KEY>",
+            authDomain: "darkmira-7ebb1.firebaseapp.com",
+            databaseURL: "https://darkmira-7ebb1.firebaseio.com",
+            projectId: "darkmira-7ebb1",
+            // storageBucket: "darkmira-7ebb1.appspot.com",
+            // messagingSenderId: "<SENDER_ID>",
+        };
+        firebase.initializeApp(config);
+        var defaultDatabase = firebase.database();
+        var likesRef = firebase.database().ref('darkmira/likes');
+        
+        likesRef.on('value', function(snapshot) {
+            
+            likesElement.innerHTML = '';
+            
+            snapshot.forEach(function(childSnapshot) {
+                var text = JSON.stringify(childSnapshot.val());
+                var preElement = document.createElement('pre');
+                preElement.textContent = text;
+                likesElement.appendChild(preElement);
+            });
+
+            // preElement.textContent = text;
+
+            // console.log(text);
+
+            // likesElement.innerHTML = preElement;
+            // updateStarCount(postElement, snapshot.val());
+        });
+    </script>
+</body>
+</html>
